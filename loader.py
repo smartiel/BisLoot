@@ -28,8 +28,17 @@ class CharLoader:
 			data=req.read()
 			self.DATA=json.loads(data)
 			self.DATA["last_load"]=time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime())
+			self.DATA["proper_date"]=time.time()
 			datahandler.dump(self.CHARNAME,self.WORLD,self.DATA)
-
+			
+	def update(self):
+			self.apiConnection.request("GET", self.CHAR_API_SERVICE+self.WORLD+"/"+self.CHARNAME+"?fields=items&locale=en_GB&apikey="+self.API_KEY, '', {})
+			req=self.apiConnection.getresponse()
+			data=req.read()
+			self.DATA=json.loads(data)
+			self.DATA["last_load"]=time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime())
+			self.DATA["proper_date"]=time.time()
+			datahandler.dump(self.CHARNAME,self.WORLD,self.DATA)
 
 
 

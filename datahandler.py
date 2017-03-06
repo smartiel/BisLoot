@@ -1,10 +1,16 @@
-import json
+import json,os
 
 
 DATA_PATH="Data/"
 
 
 def dump(charName,serverName,jsondata):
+	print("Trying to dump in "+DATA_PATH+serverName)
+	if not os.path.exists(DATA_PATH+serverName):
+		print("Creating directory "+DATA_PATH+serverName)
+		os.makedirs(DATA_PATH+serverName)
+	else:
+		print(DATA_PATH+serverName+" already exists")
 	dumpfile=open(DATA_PATH+serverName +"/"+charName+".json",'w')
 	dumpfile.write(json.dumps(jsondata))
 	dumpfile.flush()
